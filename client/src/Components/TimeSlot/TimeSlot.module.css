@@ -1,0 +1,8 @@
+.timeslot{
+    background-color: white;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    font-size: 0.875rem;
+    font-weight: bold;
+    padding: 7px 17px;
+}

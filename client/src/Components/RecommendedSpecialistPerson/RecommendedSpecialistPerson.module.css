@@ -1,0 +1,85 @@
+.person
+{
+    padding: 12px 8px 4px 13px;
+    display: flex;
+    width: 375px;
+    align-items: center;
+    gap: 14px;
+    height: 91px;
+    background: rgba(245, 245, 245, 0.35);
+    border-radius: 10px;
+    margin-bottom: 17px;
+}
+.personInfo
+{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.wrapper
+{
+    width: 231px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.name
+{
+    /* font-family: 'Space Grotesk'; */
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 18px;
+}
+.city
+{
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+}
+.specialty
+{
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 15px;
+}
+.experience
+{
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.rating{
+    font-size: 0.5rem;
+    color: #4CD964;
+}
+.progressBar
+{
+    width: 225px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.progressBar span
+{
+    width: 73px;
+    background: #C8FA60;
+    border-radius: 3px;
+    text-align: center;
+    padding: 2px 0;
+    font-size: 0.9rem;
+}
+.progressBar span:nth-child(2)
+{
+    background: rgba(200, 250, 96, 0.74);
+}
+
+.progressBar span:nth-child(3)
+{
+    background: rgba(200, 250, 96, 0.47);
+}

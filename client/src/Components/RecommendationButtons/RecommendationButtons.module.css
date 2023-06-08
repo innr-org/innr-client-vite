@@ -1,0 +1,50 @@
+.btns
+{
+    max-width: 480px;
+    width: 100%;
+    padding: 10px 15px;
+    background: #C8FA60;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+    position: absolute;
+    bottom: 0;
+}
+
+.pages{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn
+{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 38px;
+}
+
+.active{
+    border: 1px solid #000
+}
+
+.pageName
+{
+    padding: 6px 40px 6px 11px;
+    width: 210px;
+    height: 55px;
+    border-radius: 10px;
+    font-family: 'Lexend', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 25px;
+}

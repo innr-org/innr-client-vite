@@ -1,0 +1,118 @@
+@media screen and (min-width: 375px) {
+    .scanning
+    {
+        padding: 126px 0 42px 0;
+    }
+    .container
+    {
+        position: relative;
+        max-width: 335px;
+        margin: 0 auto;
+        z-index: 5;
+    }
+    .imgWrapper
+    {
+        position: relative;
+        max-width: 299px;
+        display: block;
+        margin: 0 auto 238px;
+        z-index: 1;
+    }
+    .border{
+        width: 100%;
+    }
+    .person{
+        width: 80%;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .overlay{
+        width: 299px;
+        height: 299px;
+        background-color: transparent;
+        filter: blur(15px);
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 5;
+    }
+
+    .warningText{
+        position: absolute;
+        bottom: -120px;
+    }
+
+    /*waves effect on hover*/
+    .waves{
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        z-index: 0;
+    }
+    .wave{
+        position: absolute;
+    }
+    .wave:nth-of-type(1){
+        z-index: 3;
+        height: 90%;
+        width: 90%;
+        left: 5%;
+        top: 5%
+    }
+    .wave:nth-of-type(2){
+        z-index: 2;
+        height: 95%;
+        width: 95%;
+        left: 2%;
+        top: 2%
+    }
+    .wave:nth-of-type(3){
+        z-index: 1;
+        height: 100%;
+        width: 100%;
+    }
+
+    .wave:nth-of-type(1){
+        animation: wavyRipplesOnHover 1.5s infinite cubic-bezier(.57,.21,.69,1.25);
+    }
+    .wave:nth-of-type(2){
+        animation: wavyRipplesOnHover 3s infinite cubic-bezier(.57,.21,.69,1.25);
+    }
+    .wave:nth-of-type(3){
+        animation: wavyRipplesOnHover 5s infinite cubic-bezier(.57,.21,.69,1.25);
+    }
+
+    /*@keyframes wavyRipples {*/
+    /*    0%{*/
+    /*        transform: scale(1) rotate(0);*/
+    /*    }*/
+    /*    25%{*/
+    /*        transform: scale(1.02) rotate(5deg);*/
+    /*    }*/
+    /*    50%{*/
+    /*        transform: scale(1.05) rotate(0deg);*/
+    /*    }*/
+    /*    75%{*/
+    /*        transform: scale(1.02) rotate(-5deg);*/
+    /*    }*/
+    /*    100%{*/
+    /*        transform: scale(1) rotate(0);*/
+    /*    }*/
+    /*}*/
+
+    @keyframes wavyRipplesOnHover {
+        0%{
+            transform: scale(1) rotate(0);
+        }
+        50%{
+            transform: scale(1.1) rotate(2deg);
+        }
+        100%{
+            transform: scale(1) rotate(0);
+        }
+    }
+
+}

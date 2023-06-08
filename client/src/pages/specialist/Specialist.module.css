@@ -1,0 +1,101 @@
+.specialist{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container{
+    width: 90%;
+    padding: 50px 0;
+}
+
+.header{
+    display: flex;
+    gap: 10px;
+}
+
+.header img{
+    width: 110px;
+    height: 110px;
+}
+
+.header .price{
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+.header .price b{
+    font-weight: 700;
+}
+
+.header h1{
+    margin: 0;
+}
+
+.header h2{
+    font-size: 1.3rem;
+}
+
+.header hgroup{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.info{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.infoItem{
+    display: flex;
+    gap: 5px;
+    justify-content: space-between;
+
+}
+
+.infoItem h2{
+    width: 35%;
+    font-size: 1rem;
+}
+
+.infoItem p{
+    width: 60%;
+}
+
+.headerContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.tags{
+    display: flex;
+    gap: 5px;
+}
+
+.tag{
+    background: #C8FA60;
+    border-radius: 3px;
+    text-align: center;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.enroll{
+    width: 100%;
+    padding: 20px 0;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    background-color: rgba(200, 250, 96, 0.4);
+    margin-top: 100px;
+}
+

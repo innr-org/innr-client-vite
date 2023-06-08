@@ -1,0 +1,148 @@
+.container
+{
+    max-width: 480px;
+    padding: 0px 20px;
+    margin: 0 auto;
+}
+.scan
+{
+    position: relative;
+    min-height: 391px;
+}
+
+.scanGradientHeader
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 110px;
+    background: #C8FA60;
+    filter: blur(50px);
+    z-index: -1;
+}
+
+.scanHeader{
+    display: flex;
+    align-items: center;
+    margin: 45px 0 0 20px;
+    justify-content: space-between;
+}
+
+.loginBtn{
+    padding: 10px 15px;
+}
+
+.scanTitle
+{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 25px;
+}
+
+.scanningImg
+{
+    margin-top: 37px;
+}
+
+.scanFace
+{
+    position: relative;
+    margin-top: 35px;
+    min-height: 287px;
+}
+
+.scanElems{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.scanNotificationWrapper
+{
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: #BDF1DB;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 133px;
+    right: 34px;
+    z-index: 3;
+    cursor: pointer;
+
+}
+
+.scanningFaceIcon
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.scanningFaceIcon p
+{
+    position: absolute;
+    left: -25px;
+    width: 109px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.scanAva
+{
+    background: url('/scanImgs/ava.png') center center/cover no-repeat;
+    display: block;
+    width: 51px;
+    height: 52px;
+    position: absolute;
+    top: 200px;
+    left: 50px;
+}
+
+.analysis
+{
+    position: relative;
+    min-height: 266px;
+    margin-top: 32px;
+    z-index: 5;
+}
+
+.analysisTitle
+{
+    font-family: 'Lexend';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 25px;
+    margin-bottom: 15px;
+}
+
+.sliderItem{
+    min-width: 140px;
+    height: 130px;
+    border-radius: 10px;
+    background-color: #F5F5F5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.loader{
+    width: 121px;
+    height: 100px;
+    position: relative;
+}
+
+.sliderItem .scanImg{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

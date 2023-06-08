@@ -1,0 +1,98 @@
+.results{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 480px;
+    margin: 0 auto;
+    height: calc(100vh - 75px);
+    overflow-y: auto;
+}
+
+.mainImage{
+    width: 216px;
+    height: 239px;
+    object-fit: cover;
+    border-radius: 20px;
+    margin: 30px 0 19px;
+}
+
+.container{
+    width: 90%;
+}
+
+.accuracy{
+    color: #8c4545;
+}
+
+.descOk{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.descOk span{
+    color: #4CD964;
+    color: #4CD964;
+    display: block;
+    text-align: center;
+    margin: 10px 0 20px;
+}
+
+.descOk p{
+    font-size: 1.5rem;
+}
+
+/*description section styles*/
+.desc{
+    margin-bottom: 19px;
+}
+
+.desc h1{
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 7px;
+}
+
+.desc h2, .causes h2, .procedures h2, .warning h2{
+    font-size: 1.3rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+.desc p, .causes ul, .procedures ul, .warning p{
+    font-size: 1.1rem;
+    padding: 26px 17px;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+.causes ul, .procedures ul {
+    list-style-type: circle;
+}
+
+.causes ul li, .procedures ul li{
+    margin-bottom: 4px;
+}
+
+
+.causes{
+    margin-bottom: 13px;
+}
+
+.procedures{
+    margin-bottom: 18px;
+}
+
+.error{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+}
+
+.error button{
+    padding: 15px 25px;
+    font-size: 1.5rem;
+}

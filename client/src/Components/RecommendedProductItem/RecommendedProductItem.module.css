@@ -1,0 +1,14 @@
+.product
+{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 17px;
+}
+.text
+{
+    width: 183px;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 19px;
+}
