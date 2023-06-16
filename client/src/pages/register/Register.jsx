@@ -12,10 +12,19 @@ function Register() {
     const navigate = useNavigate()
 
     const [isAccepted, setIsAccepted] = useState(false)
+
+    const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(false)
+    const [isPasswordValid, setIsPasswordValid] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
+    const [isDiffPassword, setIsDiffPassword] = useState(false)
+
     const fullNameRef = useRef(null)
     const phoneRef = useRef(null)
     const passwordRef = useRef(null)
     const passwordConfirmRef = useRef(null)
+
+    const phoneNumberRegex = /^\+?[1-9][0-9]{7,14}$/
+    const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
 
     useEffect(() => {
 
@@ -44,30 +53,93 @@ function Register() {
 
     async function register(e){
         e.preventDefault()
-        if(passwordRef.current.value !== passwordConfirmRef.current.value){
-            useNotification("danger", "Авторизация", "Пароли не совпадают!")
-            return
+        if (passwordRef.current !== null && phoneRef.current !== null)
+        {
+            phoneNumberValidation(phoneRef.current.value)
+            passwordValidation(passwordRef.current.value)
+            if (!isPhoneNumberValid)
+            {
+                useNotification("danger", "Авторизация", "Некорректный номер телефона!")
+                setErrorMessage('Некорректный номер телефона.')
+                return
+            }
+            if (!isPasswordValid)
+            {
+                useNotification("danger", "Авторизация", "Пароль должен содержать минимум 8 символов, одну заглавную букву, одну цифру и один спец символ!")
+                setErrorMessage('Пароль должен содержать минимум 8 символов, одну заглавную букву, одну цифру и один спец символ')
+                return
+            }
+
+            if(passwordRef.current.value !== passwordConfirmRef.current.value){
+                useNotification("danger", "Авторизация", "Пароли не совпадают!")
+                setErrorMessage('Пароли не совпадают!')
+                setIsDiffPassword(prev => !prev)
+                return
+            }
+
+            const details = {
+                fullName: fullNameRef.current.value,
+                phone: phoneRef.current.value,
+                password: passwordRef.current.value
+            }
+            try{
+                dispatch(userRegister(details))
+                    .then(status => {
+                        if(status===200){
+                            console.log(status)
+                            navigate('/mainscan')
+                        }
+                    })
+                    .catch(err => console.log(err))
+            }
+            catch (error) {
+                console.log(error)
+            }
+
+            clearForm()
+        }
+        else
+        {
+            setErrorMessage('FORM is EMPTY')
         }
 
-        const details = {
-            fullName: fullNameRef.current.value,
-            phone: phoneRef.current.value,
-            password: passwordRef.current.value
-        }
-        try{
-            dispatch(userRegister(details))
-                .then(status => {
-                    if(status===200){
-                        console.log(status)
-                        navigate('/mainscan')
-                    }
-                })
-                .catch(err => console.log(err))
-        }
-        catch (error) {
-            console.log(error)
-        }
+    }
 
+    function clearForm()
+    {
+        if (phoneRef.current != null && passwordRef.current != null && fullNameRef.current != null && passwordConfirmRef.current != null)
+        {
+            phoneRef.current.value = ''
+            passwordRef.current.value = ''
+            fullNameRef.current.value = ''
+            passwordConfirmRef.current.value = ''
+            setIsAccepted(false)
+        }
+    }
+
+    function phoneNumberValidation(phoneValue)
+    {
+        if (phoneNumberRegex.test(phoneValue))
+        {
+            setIsPhoneNumberValid(true)
+            console.log(isPhoneNumberValid)
+        }
+        else
+        {
+            setIsPhoneNumberValid(false)
+        }
+    }
+
+    function passwordValidation(passwordValue)
+    {
+        if (passwordRegex.test(passwordValue))
+        {
+            setIsPasswordValid(true)
+        }
+        else
+        {
+            setIsPasswordValid(false)
+        }
     }
 
     return (
@@ -83,23 +155,35 @@ function Register() {
                        placeholder='ФИО'
                        ref={fullNameRef}/>
                 <input type="text"
-                       className={styles.form__email}
-                       id='email'
-                       placeholder='Ваш номер телефона'
-                       ref={phoneRef}/>
+                        className={styles.form__email}
+                        id='email'
+                        placeholder='Ваш номер телефона'
+                        ref={phoneRef}/>
                 <input type="password"
-                       className={styles.form__password}
-                       id='password'
-                       placeholder='Пароль'
-                       required
-                       ref={passwordRef}/>
+                        className={styles.form__password}
+                        id='password'
+                        placeholder='Пароль'
+                        required
+                        ref={passwordRef}/>
                 <input type="password"
                        className={styles.form__password}
                        id='passwordConfirm'
                        placeholder='Повторите пароль'
                        required
-                       ref={passwordConfirmRef}
-                />
+                       ref={passwordConfirmRef}/>
+                {!isPhoneNumberValid || !isPasswordValid
+                    ?
+                    <p className={styles.errorMessage}> {errorMessage} </p>           
+                    :
+                    ''
+                }
+
+                {!isDiffPassword
+                    ?
+                    <p className={styles.errorMessage}> {errorMessage} </p>
+                    :
+                    ''
+                }
                 <div className={styles.agreement}>
                     {/* <input className={styles.checkbox} type="checkbox" id="checkbox" name="checkbox" value="" /> */}
 
