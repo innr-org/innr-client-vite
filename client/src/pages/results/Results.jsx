@@ -5,36 +5,51 @@ import RecommendationButtons from "../../components/RecommendationButtons/Recomm
 import {GridLoader} from "react-spinners";
 import {useNavigate, useParams} from "react-router-dom";
 import Button from "../../components/UI/button/Button.jsx";
+import UserService from "../../API/UserService.js";
 
 function Results() {
     const navigate = useNavigate()
     const params = useParams()
     const [currentScan, setCurrentScan] = useState(null)
+    const [readyDiseases, setReadyDiseases] = useState(null)
     const { userInfo } = useSelector((state) => state.auth)
 
     useEffect(() => {
         getScanData().catch(err => console.error(err))
     }, [])
+
     useEffect(() => {
         console.log(currentScan)
+    }, [currentScan])
+
+    useEffect(() => {
+        if(currentScan){
+            if(currentScan.diseases!==null){
+                async function getDiseases(){
+                    try{
+                        const diseasePromises = currentScan.diseases.map(async (diseaseId) => {
+                            const response = await UserService.getInfoById(userInfo.accessToken, diseaseId, "disease");
+                            return response.data;
+                        });
+                        const resolvedDiseases = await Promise.all(diseasePromises);
+                        setReadyDiseases(resolvedDiseases);
+                    }
+                    catch (err){
+                        console.error(err)
+                    }
+                }
+
+                getDiseases();
+            }
+        }
     }, [currentScan])
 
     async function getScanData(){
         const id = params.id
 
-        const response = await fetch(`http://localhost:8080/api/scan/${id}`, {
-            method: "GET",
-            headers: {
-                'Authorization': "Bearer" + " " +  userInfo.token.accessToken,
-                'Access-Control-Allow-Origin': '*',
-                "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE, PUT",
-                "Access-Control-Allow-Headers": "append,delete,entries,foreach,get,has,keys,set,values,Authorization",
-                'Access-Control-Allow-Credentials': "true",
-                "Content-Type": "application/json"
-            },
-        }).catch(err => console.error(err))
+        const response = await UserService.getInfoById(userInfo.accessToken, id, "scan")
         console.log(response)
-        const data = await response.json()
+        const data = await response.data
         setCurrentScan(data)
     }
 
@@ -60,18 +75,28 @@ function Results() {
 
     }
     else {
-        if(params.id!=="undefined"){
-            const isAcne = Number(currentScan?.acne.substring(0, 2))>50
+        if(params.id!=="undefined" && readyDiseases){
+            // const data = JSON.parse(localStorage.getItem("result"))
+            const acne = Math.round(currentScan.percent*100)
+            const isAcne = acne<50
+
+            const causes = readyDiseases[0].causes.map(cause => {
+                return <li>{cause}</li>
+            })
+            const procedures = readyDiseases[0].procedures.map(procedure => {
+                return <li>{procedure}</li>
+            })
             return (
                 <div className={cl.results}>
                     <div className={cl.container}>
                         {currentScan === {}
                             ? <img className={cl.mainImage} src={girl} alt={"Scanned face"}/>
-                            : <img width={216} height={239} className={cl.mainImage + " " + "animate__animated animate__fadeIn"}
+                            :
+                             <img width={216} height={239} className={cl.mainImage + " " + "animate__animated animate__fadeIn"}
                                    src={"data:image/jpeg;base64," + currentScan.image} alt={"Scanned face result"}/>
                         }
                         {!isAcne ? <div className={cl.descOk}>
-                            <h2 className="animate__animated animate__fadeInLeft">Показатель обнаружения акне: <span className="animate__animated animate__fadeIn animate__delay-1s">{Number(currentScan?.acne.substring(0, 2))}%</span></h2>
+                            <h2 className="animate__animated animate__fadeInLeft">Показатель обнаружения акне: <span className="animate__animated animate__fadeIn animate__delay-1s">{Number(acne)}%</span></h2>
                             <p>Вероятность того, что у вас акне довольно мала!
                             </p>
                             <p>Тем не менее, если вы чувствуете что у вас проблемы с кожей лица обратитесь к специалисту.</p>
@@ -79,31 +104,21 @@ function Results() {
                             <div>
                                 <div className={cl.desc}>
                                     <h1>Описание</h1>
-                                    <h2>Акне <span className={cl.accuracy}>{currentScan.acne?.substring(0, 2)}%</span></h2>
+                                    <h2>{readyDiseases[0].name} <span className={cl.accuracy}>{acne}%</span></h2>
                                     <p>
-                                        {currentScan.diseases && currentScan.diseases[0].description}
+                                        {readyDiseases[0].description}
                                     </p>
                                 </div>
                                 <div className={cl.causes}>
                                     <h2>Причины</h2>
                                     <ul>
-                                        {/*{currentScan.diseases && currentScan.diseases[0].reasons}*/}
-                                        <li>Генетика. Предрасположенность к угревой болезни, можно унаследовать от близких и не очень близких родственников. Именно поэтому некоторые люди не следят за кожей, а угри их не атакуют.</li>
-                                        <li>Неполадки в эндокринной системе. Железы вырабатывают больше сала, усиливается ороговение кожи, а это, в свою очередь, способствует закупориванию пор и появлению угрей.</li>
-                                        <li>Инфекция. Propionibacterium acnes (P. acnes) обитает на поверхности кожи в норме. Именно она способствует воспалению закупоренных сальных желез.</li>
+                                        {causes}
                                     </ul>
                                 </div>
                                 <div className={cl.procedures}>
                                     <h2>Рекомендуемые процедуры</h2>
                                     <ul>
-                                        <li>Мезотерапия</li>
-                                        <li>Пиллинги</li>
-                                        <li>Микродермабразия</li>
-                                        <li>Фотолечение</li>
-                                        <li>Чистка лица</li>
-                                        {/*<li>{currentScan.products && currentScan.products[0].name}*/}
-                                        {/*    <div>{currentScan.products && currentScan.products[0].description}</div>*/}
-                                        {/*</li>*/}
+                                        {procedures}
                                     </ul>
                                 </div>
                                 <div className={cl.warning}>

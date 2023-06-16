@@ -9,8 +9,7 @@ import {
 import cl from './Agora.module.css'
 
 const appId = "ff93f0b6cbca4e779a00fff694b2cf68";
-const token = "007eJxTYGC0e//27xqBVXwvCpcKbNg2Z8v/pqcHVx10Tmyu1XAV2rBegSEtzdI4zSDJLDkpOdEk1dzcMtHAIC0tzczSJMkoOc3Mov9dXUpDICOD4PM1LIwMEAjiszBk5uUVMTAAACHzIp8="
-
+const token = "007eJxTYJDYUrBtEpPq+fsK/M+/7Hv3bN/Xu7P1jrkfVS3baD3h1t4ZCgxpaZbGaQZJZslJyYkmqebmlokGBmlpaWaWJklGyWlmFoyGPSkNgYwMb5KnszAyQCCIz8KQmZdXxMAAAEEVIqY="
 const config = {
     mode: 'rtc',
     codec: 'vp8',

@@ -75,6 +75,10 @@
     gap: 10px;
 }
 
+.headerContainer img{
+    border-radius: 10px;
+}
+
 .tags{
     display: flex;
     gap: 5px;

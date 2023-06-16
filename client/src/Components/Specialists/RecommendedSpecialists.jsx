@@ -7,14 +7,14 @@ function RecommendedSpecialists({specialists}) {
     if(specialists){
         RecommendedSpecialistItems = specialists.map(specialist => {
             return  <RecommendedSpecialistPerson
-                src={person}
-                name={specialist.name}
-                city={'Астана'}
-                specialty={'Врач дерматолог'}
-                experience={'7+ лет'}
+                src={specialist.image}
+                name={specialist.fullName}
+                city={specialist.city}
+                specialty={specialist.speciality}
+                experience={`${specialist.experience} лет`}
                 tags={specialist.tags}
                 rating={specialist.rating}
-                visits={specialist.visited}
+                visits={"100"}
                 specialist={specialist}
             >
             </RecommendedSpecialistPerson>

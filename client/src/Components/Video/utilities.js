@@ -2775,6 +2775,7 @@ export const drawMesh = (predictions, ctx, type) => {
     };
 
     requestAnimationFrame(draw);
+    cancelAnimationFrame(draw)
 };
 
 
