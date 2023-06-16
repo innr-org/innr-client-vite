@@ -52,7 +52,9 @@ const authSlice = createSlice({
         },
         [userRegister.fulfilled]: (state, { payload }) => {
             state.loading = false
-            state.success = true // registration successful
+            state.userInfo = payload
+            state.userToken = payload.userToken
+            state.success = true
         },
         [userRegister.rejected]: (state, { payload }) => {
             state.loading = false

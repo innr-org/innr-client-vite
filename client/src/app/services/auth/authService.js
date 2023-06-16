@@ -1,16 +1,26 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
+let BASE_URL
+if(import.meta.env.MODE === "development"){
+    BASE_URL=import.meta.env.VITE_SERVER_URL
+}
+else{
+    BASE_URL=import.meta.env.VITE_SERVER_URL
+}
+
+const PORT=8000
+
 export const authApi = createApi({
     reducerPath: 'authApi',
     baseQuery: fetchBaseQuery({
         // base url of backend API
-        baseUrl: 'http://localhost:8080/',
+        baseUrl: `${BASE_URL}:${PORT}`,
         // prepareHeaders is used to configure the header of every request and gives access to getState which we use to include the token from the store
         prepareHeaders: (headers, { getState }) => {
             const token = getState().auth.userToken
             if (token) {
                 // include token in req header
-                headers.set('authorization', `Bearer ${token}`)
+                headers.set('x-access-token', token)
                 return headers
             }
         },
@@ -18,8 +28,8 @@ export const authApi = createApi({
     endpoints: (builder) => ({
         getUserDetails: builder.query({
             query: () => ({
-                url: 'api/auth/token',
-                method: 'POST',
+                url: '/api/auth/profile',
+                method: 'GET',
             }),
         }),
     }),

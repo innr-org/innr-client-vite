@@ -92,6 +92,18 @@
     justify-content: center;
 }
 
+.content{
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.contentContainer{
+    width: 80%;
+}
+
 
 
 @media screen and (min-width: 720px){

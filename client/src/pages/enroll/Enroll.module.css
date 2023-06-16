@@ -1,3 +1,10 @@
+.enrollsWrapper{
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
 .enrolls{
     display: flex;
     justify-content: center;
@@ -8,6 +15,7 @@
 }
 
 .enrolls .container{
+
     width: 90%;
     display: flex;
     align-items: center;

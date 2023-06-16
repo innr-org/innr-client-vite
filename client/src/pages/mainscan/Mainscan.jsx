@@ -22,24 +22,18 @@ function Mainscan() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { userInfo } = useSelector((state) => state.auth)
+
     const [imageLoading, setImageLoading] = useState(false)
-    const [scans, setScans] = useState([])
+
     const [readyScans, setReadyScans] = useState([])
-    const [fetchScans, isScansLoading, scansError] = useFetching(async () => {
-        const response = await UserService.getScans(userInfo.token.accessToken)
-        setScans(await response.data)
-    })
+
 
     useEffect(() => {
-        fetchScans()
-    }, [])
-
-    useEffect(() => {
-        const fetchReadyScans = async () => {
+        async function fetchReadyScans() {
             try{
                 setImageLoading(true)
-                const scanPromises = scans.map(async (scan) => {
-                    const response = await UserService.getScanById(userInfo.token.accessToken, scan.id);
+                const scanPromises = userInfo.scans.map(async (scanId) => {
+                    const response = await UserService.getInfoById(userInfo.accessToken, scanId, "scan");
                     return response.data;
                 });
                 const resolvedScans = await Promise.all(scanPromises);
@@ -56,12 +50,7 @@ function Mainscan() {
         };
 
         fetchReadyScans();
-    }, [scans]);
-
-    useEffect(() => {
-        console.log(readyScans)
-    }, [readyScans])
-
+    }, [userInfo.scans]);
 
     function customLogout(){
         dispatch(logout())
@@ -69,7 +58,7 @@ function Mainscan() {
     }
 
     const scanHistory = readyScans.map(scan => {
-        return <SwiperSlide onClick={() => navigate(`/results/${scan.id}`)}>
+        return <SwiperSlide onClick={() => navigate(`/results/${scan._id}`)}>
             <div className={classes.sliderItem}>
                 <img className={classes.scanImg} src={"data:image/jpeg;base64," + scan.image} alt="plus" />
             </div>
@@ -81,20 +70,20 @@ function Mainscan() {
                 <section className={classes.scan}>
                     <div className={classes.scanGradientHeader}></div>
                     <div className={classes.scanHeader}>
-                        <h1 className={classes.scanTitle}>{userInfo.phone===null ? "null" : userInfo.phone}</h1>
+                        <h1 className={classes.scanTitle + " " + "animate__animated animate__backInDown"}>{userInfo.phone===null ? "null" : userInfo.phone}</h1>
                         { !userInfo
                             ?
                             <Button className={classes.loginBtn} onClick={() => navigate("/login")}>Login</Button>
                             :
-                            <Button suppressHydrationWarning className={classes.loginBtn} onClick={customLogout}>Logout</Button>
+                            <Button suppressHydrationWarning className={classes.loginBtn +  " " + "animate__animated animate__fadeInTopRight"} onClick={customLogout}>Logout</Button>
                         }
 
                     </div>
                     <div onClick={() => navigate('/scan')} className={classes.scanFace}>
-                        <img className={classes.scanElems} src={scanElems} alt=""/>
+                        <img className={classes.scanElems + " " + "animate__animated animate__zoomIn"} src={scanElems} alt=""/>
                         <div className={classes.scanningFaceIcon}>
-                            <img src={scanSvg} alt="scan" />
-                            <p>Сканировать лицо</p>
+                            <img className={"animate__animated animate__rotateIn animate__delay-0.5s"} src={scanSvg} alt="scan" />
+                            <p className={"animate__animated animate__zoomIn"}>Сканировать лицо</p>
                         </div>
 
                         <div className={classes.scanAva}></div>
@@ -132,7 +121,7 @@ function Mainscan() {
                                     data-testid="loader"
                                 />
                             </div>
-                        </SwiperSlide> : scans.length!==0 && scanHistory.reverse()}
+                        </SwiperSlide> : readyScans.length!==0 && scanHistory.reverse()}
                         <SwiperSlide>
                             <div className={classes.sliderItem} onClick={() => navigate("/scan")}>
                                 <img src={plusSvg} alt="plus" />
@@ -151,10 +140,7 @@ function Mainscan() {
                     </Swiper>
                 </div>
             </section>
-            <h1 style={{textAlign: 'center', letterSpacing: '0.8em', backgroundColor: "#C8FA60", position: 'fixed', bottom: 0,
-                    padding: '20px 0', width: '100%', margin: 0
-
-            }}>Innr</h1>
+            <div className={classes.logo}><p>Innr</p></div>
         </div>
     );
 }

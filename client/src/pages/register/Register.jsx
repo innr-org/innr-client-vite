@@ -55,7 +55,14 @@ function Register() {
             password: passwordRef.current.value
         }
         try{
-            dispatch(userRegister(details)).catch(err => console.log(err))
+            dispatch(userRegister(details))
+                .then(status => {
+                    if(status===200){
+                        console.log(status)
+                        navigate('/mainscan')
+                    }
+                })
+                .catch(err => console.log(err))
         }
         catch (error) {
             console.log(error)

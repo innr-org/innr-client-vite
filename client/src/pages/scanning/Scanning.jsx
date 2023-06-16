@@ -1,69 +1,63 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import Button from "../../components/UI/button/Button.jsx";
 import cl from './Scanning.module.css'
 import Modal from "../../components/UI/modal/Modal.jsx";
 import Video from "../../components/Video/Video.jsx";
-import camera from '../../assets/scanIcons/camera.png'
+import cameraPng from '../../assets/scanIcons/camera.png'
 
 function Scanning(props) {
     const [isClicked, setIsClicked] = useState(false)
-    const [typeModalActive, setTypeModalActive] = useState(true)
-    const [alertModalActive, setAlertModalActive] = useState(false)
-    const [selectedType, setSelectedType] = useState({value: '', text: ''})
+    const [isScanning, setIsScanning] = useState(false)
+    const [results, setResults] = useState([])
+    const poseImgRef = useRef(null)
+    const requirements = ["whole", "leftСheek", "rightСheek", "forehead", "chin"]
+    const [scanType, setScanType] = useState("")
+
 
     useEffect(() => {
-        if(selectedType.text !== '' && selectedType.value !== ''){
-            setTypeModalActive(false)
-            setAlertModalActive(true)
-        }
-    }, [selectedType])
+        console.log(results)
+        setScanType(requirements[results.length])
+    }, [results])
 
+    const handleScroll = () => {
+        poseImgRef.current?.scrollIntoView({behavior: 'smooth'});
+    };
 
-    const analysisTypes = [
-        {value: 'whole', text: 'Все лицо'},
-        {value: 'nose', text: 'Нос'},
-        {value: 'forehead', text: 'Лоб'},
-        {value: 'leftСheek', text: 'Левая щека'},
-        {value: 'rightСheek', text: 'Правая щека'},
-        {value: 'chin', text: 'Подбородок'},
-    ]
-    const analysisTypesBtns = analysisTypes.map(type => {
-        return (
-            <Button style={{padding: '15px 25px'}}
-                    onClick={() => setSelectedType({value: type.value, text: type.text})}>
-                {type.text}
-            </Button>
-        )
-    })
+    function handleResultsChange(updatedResults) {
+        // Do something with the updated results
+        setResults(updatedResults)
+    }
+
+    function activateScanning(){
+        setIsClicked(true)
+        setIsScanning(true)
+    }
+
 
     return (
         <>
-            <Modal style={{textAlign: 'center'}} visible={alertModalActive} setVisible={setAlertModalActive}>
-                <h2>Внимание!</h2>
-                <br/>
-                <h2>Пожалуйста снимите все аксессуары и одежду с головы!</h2>
-                <br/>
-                <h2>Важно: "{selectedType.text}" должен/должна находится внутри отмеченной зоны (овала)</h2>
-                <Button style={{padding: '10px 50px', color: 'darkred', marginTop: '40px'}}
-                        onClick={() => setAlertModalActive(false)}
-                >
-                    Закрыть X
-                </Button>
-            </Modal>
-            <section className={cl.scanning}>
+            <div className={cl.scanning}>
                 <div className={cl.container}>
-                    <Video isClicked={isClicked} setIsClicked={setIsClicked} scanType={selectedType.value}/>
+                    <div onClick={handleScroll} className={cl.scroll}></div>
+                    <div className={cl.video}>
+                        <div className={cl.webcam}>
+                            <Video onResultsChange={handleResultsChange} isClicked={isClicked} setIsClicked={setIsClicked} setIsScanning={setIsScanning} scanType={scanType}/>
+                        </div>
+                    </div>
+                </div>
+                <div className={cl.content}>
+                    <div className={cl.contentContainer}>
+                        <h3>Пожалуйста поместите отмеченную зону в круг!</h3>
+                        <img ref={poseImgRef} src={requirements[results.length]} alt=""/>
+                    </div>
                 </div>
                 <div className={cl.scanningShot}>
-                    <div className={cl.scanningAction}></div>
-                    <div onClick={() => setIsClicked(true)} className={cl.scanningCameraShot}>
-                        <img src={camera} alt="camera" />
+                    <div onClick={activateScanning} className={cl.scanningCameraShot}>
+                        <img src={cameraPng} alt=""/>
                     </div>
-                    <div className={cl.scanningAction}></div>
                 </div>
-            </section>
+            </div>
         </>
-
     );
 }
 

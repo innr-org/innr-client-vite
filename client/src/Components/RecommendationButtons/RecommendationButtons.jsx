@@ -16,7 +16,7 @@ function RecommendationButtons({page, id}) {
                     </button>
                 </Link>
                     :
-                    <Link to="/results">
+                    <Link to={`/results/${id}`}>
                         <button className={classes.btn + " " + activeResult}>
                             1
                         </button>
@@ -29,7 +29,7 @@ function RecommendationButtons({page, id}) {
                     </button>
                 </Link>
                     :
-                    <Link to="/recommendations">
+                    <Link to={`/recommendations/${id}`}>
                         <button className={classes.btn + " " + activeRec}>
                             2
                         </button>

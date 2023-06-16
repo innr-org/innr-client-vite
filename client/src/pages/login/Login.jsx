@@ -30,7 +30,7 @@ function Login() {
             navigate("/mainscan")
         }
         else if(!success && error && !loading){
-            if(error === "Request failed with status code 401"){
+            if(error === "User Not found."){
                 useNotification("danger", "Авторизация", "Неверные данные!")
                 clearForm()
             }

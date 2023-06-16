@@ -1,51 +1,86 @@
 import axios from "axios";
-const BASE_URL = "http://localhost"
-const PORT = 8080
+let BASE_URL
+if(import.meta.env.MODE === "development"){
+    BASE_URL=import.meta.env.VITE_SERVER_URL
+}
+else{
+    BASE_URL=import.meta.env.VITE_SERVER_URL
+}
+const PORT = 8000
 
 export default class UserService{
-    static async getScans(token){
-        const headers = {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": 'application/json'
-        }
-
-        const response = await axios.get(`${BASE_URL}:${PORT}/api/scan/history`, {
-            headers: headers
-        })
-        return response
-    }
-
-    static async getScanById(token, id){
-        const headers = {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": 'application/json'
-        }
-
-        const response = await axios.get(`${BASE_URL}:${PORT}/api/scan/` + id, {
-            headers: headers
-        })
-
-        return response
-    }
-
-    // static async login(details) {
-    //     const formBody: string[] = [];
-    //     for (const property in details) {
-    //         const encodedKey = encodeURIComponent(property);
-    //         const encodedValue = encodeURIComponent(details[property]);
-    //         formBody.push(encodedKey + "=" + encodedValue);
+    // static async getScans(token){
+    //     const headers = {
+    //         "x-access-token": `${token}`,
+    //         "Content-Type": 'application/json'
     //     }
-    //     const formBodyString = formBody.join("&");
     //
-    //     const response = await fetch('http://164.92.164.196:8080/api/auth/token', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-    //         },
-    //         body: formBodyString
+    //     const response = await axios.get(`${BASE_URL}:${PORT}/api/scan/history`, {
+    //         headers: headers
     //     })
-    //
     //     return response
-    //
     // }
+
+    static async getInfoById(token, id, type){
+        const headers = {
+            "x-access-token": `${token}`,
+            "Content-Type": 'application/json'
+        }
+
+        const response = await axios.get(`${BASE_URL}:${PORT}/api/${type}/${id}`, {
+            headers: headers
+        })
+
+        return response
+    }
+
+    static async login(details) {
+       const body = {
+           phone: details.phone,
+           password: details.password
+       }
+
+        const response = await fetch(`${BASE_URL}:${PORT}/api/auth/signin`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: body
+        })
+
+        return response
+
+    }
+
+    static async scan(token, details){
+        const body = {
+            images: details
+        }
+        const headers = {
+            "x-access-token": `${token}`,
+            "Content-Type": 'application/json'
+        }
+
+        const response = await axios.post(`${BASE_URL}:${PORT}/api/scan/create`, body, {
+            headers: headers
+        })
+
+        return response
+
+    }
+
+    static async addEnroll(token, details){
+        const headers = {
+            "x-access-token": `${token}`,
+            "Content-Type": 'application/json'
+        }
+
+        const response = await axios.post(`${BASE_URL}:${PORT}/api/enroll/create`, details, {
+            headers: headers
+        })
+
+        return response
+
+    }
+
 }

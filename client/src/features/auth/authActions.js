@@ -1,9 +1,10 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axios from 'axios'
 
-const backendURL = 'http://localhost:8080'
+const backendURL = import.meta.env.VITE_SERVER_URL + ":8000"
+
 export const userLogin = createAsyncThunk(
-    'auth/login',
+    '/api/auth/signin',
     async (userData, { rejectWithValue }) => {
         try {
             return await login(userData)
@@ -18,9 +19,10 @@ export const userLogin = createAsyncThunk(
     }
 )
 export const userRegister = createAsyncThunk(
-    '/auth/register',
+    '/api/auth/signup',
     async (userData, { rejectWithValue }) => {
         try {
+
             const config = {
                 headers: {
                     'Content-Type': 'application/json'
@@ -34,23 +36,15 @@ export const userRegister = createAsyncThunk(
             }
 
             const { data, status } = await axios.post(
-                `${backendURL}/api/accounts`,
+                `${backendURL}/api/auth/signup`,
                 body,
                 config
             )
 
-            console.log(await userData.phone)
-
-            if(await status==201) {
-                await login({phone: userData.phone, password: userData.password})
-                return "ok"
-            }
-            else{
-                console.log(status)
-            }
-
+            console.log(data)
+            return await login({phone: userData.phone, password: userData.password})
         } catch (error) {
-            console.log(error.message)
+            console.log(error.response.data.message)
             // return custom error message from API if any
             if (error.response && error.response.data.message) {
                 return rejectWithValue(error.response.data.message)
@@ -65,24 +59,22 @@ async function login(userData){
     // configure header's Content-Type as JSON
     const config = {
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+            'Content-Type': 'application/json'
         },
     }
 
-    const formBody =  [];
-    for (const property in userData) {
-        const encodedKey = encodeURIComponent(property);
-        const encodedValue = encodeURIComponent(userData[property]);
-        formBody.push(encodedKey + "=" + encodedValue);
+    const body = {
+        phone: userData.phone,
+        password: userData.password,
+
     }
-    const formBodyString = formBody.join("&");
 
     const { data } = await axios.post(
-        `${backendURL}/api/auth/token`,
-        formBodyString,
+        `${backendURL}/api/auth/signin`,
+        body,
         config
     )
     // store user's token in local storage
-    localStorage.setItem('userToken', data.token.accessToken)
+    localStorage.setItem('userToken', data.accessToken)
     return data
 }

@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react'
 import classes from './RecommendedSpecialistPerson.module.css'
-import Img from "../UI/img/Img.jsx";
 import Rating from "react-rating";
 import {useNavigate} from "react-router-dom";
 
@@ -20,11 +19,11 @@ function RecommendedSpecialistPerson({src, name, city, specialty, experience, ta
         function seeMore(){
             const specialistJSON = JSON.stringify(specialist)
             localStorage.setItem("specialist", specialistJSON);
-            navigate("/specialists/" + specialist.id)
+            navigate("/specialists/" + specialist._id)
         }
     return (
         <div className={classes.person} onClick={seeMore}>
-            <Img size={71} borderRadius={0}>{src}</Img>
+            <img width={71} height={71} src={src}></img>
             <div className={classes.personInfo}>
                 <div className={classes.wrapper}>
                     <p className={classes.name}>{name}</p>

@@ -48,10 +48,12 @@ function App() {
           <Route path={"/scan"} element={userInfo===null ? <NotAuth/> : <Scan/>}/>
           <Route path={"/scanning"} element={userInfo===null ? <NotAuth/> : <Scanning/>}/>
           <Route path={"/results/:id"} element={userInfo===null ? <NotAuth/> : <Results/>}/>
+          <Route path={"/results"} element={userInfo===null ? <NotAuth/> : <Results/>}/>
           <Route path={"/recommendations/:id"} element={userInfo===null ? <NotAuth/> : <Recommendations/>}/>
+          <Route path={"/recommendations"} element={userInfo===null ? <NotAuth/> : <Recommendations/>}/>
           <Route path={"/specialists/:id"} element={userInfo===null ? <NotAuth/> : <Specialist/>}/>
           <Route path={"/booking/:id"} element={userInfo===null ? <NotAuth/> : <Booking/>}/>
-          <Route path={"/enrolls"} element={userInfo===null ? <NotAuth/> : <Enrolls/>}/>
+          <Route path={"/enrolls"} element={<Enrolls/>}/>
           <Route path={"/lobby"} element={<Lobby/>}/>
           <Route path={"*"} element={<NotFound/>}/>
       </Routes>

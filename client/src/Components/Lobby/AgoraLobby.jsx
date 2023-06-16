@@ -16,7 +16,7 @@ export default function AgoraLobby(props) {
                 <h1>Сессия со специалистом</h1>
             </header>
             <main className={cl.main}>
-                <Image className={cl.mainImg} src={girlPhone} alt="girlScanning"/>
+                <img className={cl.mainImg} src={girlPhone} alt="girlScanning"/>
             </main>
             {!joined && (
                  <button className={cl.joinBtn} onClick={() => setJoined(true)}>Join Room</button>

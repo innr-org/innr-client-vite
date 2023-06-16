@@ -26,14 +26,14 @@ function Scan() {
             <section className={cl.scanning}>
                 <div className={cl.container}>
                     <div className={cl.imgWrapper}>
-                        <div className={cl.waves}>
+                        <div className={cl.waves + " " + "animate__animated animate__zoomIn"}>
                             <img className={hovered ? [cl.wave, cl.waveActive].join(' ') : cl.wave} src={waveGrey} alt="wave-svg-gray"/>
                             <img className={hovered ? [cl.wave, cl.waveActive].join(' ') : cl.wave} src={waveGreen} alt="wave-svg-green"/>
                             <img className={hovered ? [cl.wave, cl.waveActive].join(' ') : cl.wave} src={waveYellow} alt="wave-svg-yellow"/>
                         </div>
                         <img className={cl.border} src={borderSvg} alt="scan-example" />
-                        <img className={cl.person} src={personPng} alt=""/>
-                        <h3 className={cl.warningText}>Пожалуйста, снимите все аксессуары и головные уборы. А также очистите макияж с лица.</h3>
+                        <img className={"animate__animated animate__fadeIn animate__delay-1s" + " " + cl.person} src={personPng} alt=""/>
+                        <h3 className={cl.warningText + " " + "animate__animated animate__backInLeft"}>Пожалуйста, снимите все аксессуары и головные уборы. А также очистите макияж с лица.</h3>
                     </div>
 
                     <Button onClick={() => navigate("/scanning")} style={{padding: '19px 137px'}} onMouseEnter={activateAnimation} onMouseLeave={disableAnimation}>Начать</Button>
